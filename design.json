@@ -1,0 +1,22 @@
+{
+  "format": "msgring-bench design v1",
+  "modes": ["msgring", "msgring_defer", "mpmc_eventfd", "mpmc_spin"],
+  "producers": [1, 7],
+  "reps": 10,
+  "aa_reps": 10,
+  "aa_cell": {"mode": "mpmc_eventfd", "producers": 1},
+  "latency": {"msgs_per_producer": 10000, "gap_ns": 50000, "warmup_per_producer": 1000},
+  "throughput": {"msgs_per_producer": 50000},
+  "queue_capacity": 4096,
+  "consumer_cq_entries": 32768,
+  "producer_ring_entries": 64,
+  "pin": {"consumer_cpu": 0, "producer_cpus_start": 1},
+  "order_seed": 20261029,
+  "bootstrap": {"resamples": 10000, "seed": 7, "ci": 0.95},
+  "primary": [
+    {"metric": "p99", "a": "msgring", "b": "mpmc_eventfd", "producers": 1},
+    {"metric": "p99", "a": "msgring", "b": "mpmc_eventfd", "producers": 7}
+  ],
+  "negative_control": {"metric": "p99", "cell": {"mode": "mpmc_eventfd", "producers": 1}, "expect": "ci_includes_0"},
+  "positive_control": {"metric": "p99", "mode": "mpmc_eventfd", "a_producers": 7, "b_producers": 1, "expect": "ci_excludes_0"}
+}
