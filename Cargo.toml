@@ -1,0 +1,20 @@
+[package]
+name = "msgring-bench"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "MSG_RING de io_uring contra cola MPMC lock-free para pasar mensajes entre hilos: benchmark pre-registrado con IC bootstrap"
+repository = "https://github.com/federiconbaez/cortex9-msgring-vs-mpmc-bench"
+
+[dependencies]
+io-uring = "0.7"
+libc = "0.2"
+serde_json = "1"
+lockfree-mpmc = { git = "https://github.com/federiconbaez/lockfree-mpmc", rev = "c4d8fd0f2c9939d7033e0fd91c8a087b3f957693" }
+
+[dev-dependencies]
+sha2 = "0.10"
+
+[profile.release]
+opt-level = 3
+codegen-units = 1
